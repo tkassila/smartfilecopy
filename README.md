@@ -5,7 +5,14 @@ Usage
 =====
 
 Case Ebook
-----------
+--------
+
+0. Select premade named config set --> input and output dir values.
+1. Or select input directory
+2. And output (=target) directory
+3. Check "titles"
+4. Some of next radio buttons:
+5. -- 
 
 Case Copy
 ---------
