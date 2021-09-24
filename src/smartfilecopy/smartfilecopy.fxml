@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane alignment="center" hgap="10" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="408.0" prefWidth="1448.0" vgap="10" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <VBox fx:id="vboxMain" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="398.0" prefWidth="1466.0">
+         <children>
+            <HBox prefHeight="33.0" prefWidth="1039.0">
+               <children>
+                  <Button fx:id="buttonDirPairs" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonDirPairsClicked" prefHeight="30.0" prefWidth="191.0" text="Select and edit dir config" HBox.hgrow="NEVER" />
+                  <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="23.0" prefWidth="100.0" text="Config name:" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="3.0" right="3.0" top="3.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="textFieldDirPairs" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="30.0" prefWidth="952.0" HBox.hgrow="SOMETIMES">
+                     <HBox.margin>
+                        <Insets left="3.0" />
+                     </HBox.margin></TextField>
+               </children>
+               <padding>
+                  <Insets bottom="3.0" top="3.0" />
+               </padding>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="58.0" text="Source:" HBox.hgrow="NEVER">
+                     <padding>
+                        <Insets left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="textFieldSourcePath" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="1385.0">
+                     <HBox.margin>
+                        <Insets left="3.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Button fx:id="buttonSource" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonSourcePressed" prefHeight="30.0" prefWidth="109.0" text="Select source dir" />
+                  <CheckBox fx:id="checkBoxTitles" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="56.0" text="Titles:" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" top="10.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkBoxOnlyEpubs" mnemonicParsing="false" prefHeight="24.0" prefWidth="114.0" text="Only epubs">
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="5.0" top="10.0" />
+                     </HBox.margin>
+                  </CheckBox>
+                  <CheckBox fx:id="checkBoxStartWith" mnemonicParsing="false" prefHeight="24.0" prefWidth="148.0" text="Starts With Subtitle">
+                     <HBox.margin>
+                        <Insets bottom="5.0" top="10.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                  </CheckBox>
+                  <CheckBox fx:id="checkBoxSimilar" mnemonicParsing="false" prefHeight="24.0" prefWidth="80.0" text="Similar:" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" top="10.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                  </CheckBox>
+                  <TextField fx:id="textFiledSimilarity" prefHeight="25.0" prefWidth="46.0" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <RadioButton fx:id="radioButtonCopyTitles" maxHeight="26.0" maxWidth="110.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="84.0" text="Copy titles" HBox.hgrow="NEVER">
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="titles" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="radioButtonSelectCopyingTitles" maxHeight="26.0" maxWidth="149.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="135.0" text="Select copying titles" toggleGroup="$titles">
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="radioButtonFindTuples" maxHeight="26.0" maxWidth="169.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#radioButtonFindTuplesPrsessed" prefHeight="26.0" prefWidth="88.0" text="Find tuples" toggleGroup="$titles" HBox.hgrow="NEVER">
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="radioButtonFindRealTuples" maxHeight="26.0" maxWidth="169.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#radioButtonFindTuplesPrsessed" prefHeight="26.0" prefWidth="110.0" text="Find real tuples" toggleGroup="$titles">
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="radioButtonSortBaseFNames" maxHeight="26.0" maxWidth="261.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="254.0" text="Sort after basenames below target/source" toggleGroup="$titles" HBox.hgrow="NEVER">
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="radioButtonSortSimilarBaseFNames" maxHeight="26.0" maxWidth="248.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.0" prefWidth="109.0" text="Sort after titles" toggleGroup="$titles">
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </RadioButton>
+               </children>
+               <padding>
+                  <Insets bottom="3.0" top="3.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <RadioButton fx:id="radioButtonCopyFlles" ellipsisString="titles" maxHeight="26.0" maxWidth="124.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="80.0" text="Copy files" toggleGroup="$titles">
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="radioButtonMissigTitles" ellipsisString="titles" maxHeight="26.0" maxWidth="124.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="99.0" text="Missing title dirs" toggleGroup="$titles">
+                     <padding>
+                        <Insets bottom="3.0" top="3.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="5.0" top="10.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="radioButtonSortTypeOf" mnemonicParsing="false" text="Sort type of:" toggleGroup="$titles">
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="5.0" top="10.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets top="3.0" />
+                     </padding>
+                  </RadioButton>
+                  <ChoiceBox fx:id="choiceboxType" prefWidth="150.0">
+                     <HBox.margin>
+                        <Insets bottom="5.0" top="10.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets right="-8.0" top="3.0" />
+                     </padding>
+                  </ChoiceBox>
+                  <Label text="Reading from:">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="15.0" right="5.0" top="10.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets top="3.0" />
+                     </padding>
+                  </Label>
+                  <RadioButton fx:id="radioButtonSource" mnemonicParsing="false" text="source">
+                     <HBox.margin>
+                        <Insets bottom="5.0" top="10.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets top="3.0" />
+                     </padding>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="reading" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="radioButtonTarget" mnemonicParsing="false" text="target" toggleGroup="$reading">
+                     <padding>
+                        <Insets top="3.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" top="10.0" />
+                     </HBox.margin>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="25.0" prefWidth="59.0" text="Target:" HBox.hgrow="NEVER">
+                     <padding>
+                        <Insets left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="textFieldTargetPath" maxWidth="1.7976931348623157E308" prefHeight="25.0" prefWidth="1392.0">
+                     <HBox.margin>
+                        <Insets left="3.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox fx:id="hBoxListDirs" prefHeight="30.0" prefWidth="641.0">
+               <children>
+                  <Button fx:id="buttonTarget" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonTargetPressed" prefHeight="28.0" prefWidth="110.0" text="Select target  dir">
+                     <padding>
+                        <Insets right="5.0" />
+                     </padding></Button>
+                  <CheckBox fx:id="checkBoxCompress" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="122.0" text="Compress">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </CheckBox>
+                  <RadioButton fx:id="radioButtonZip" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="59.0" text="zip">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="pack" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="radioButton7z" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="76.0" text="tar.gz" toggleGroup="$pack">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="radioButtonTar" minWidth="-Infinity" mnemonicParsing="false" prefHeight="20.0" prefWidth="58.0" text="tar" toggleGroup="$pack">
+                     <HBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <Button fx:id="buttonExecute" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonExecutePressed" prefHeight="30.0" prefWidth="90.0" text="Execute">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin></Button>
+                  <Button fx:id="buttonShowErrors" layoutX="352.0" layoutY="10.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonShowErrorsClicked" prefHeight="30.0" prefWidth="101.0" text="Show Errors" />
+                  <HBox prefHeight="28.0" prefWidth="437.0">
+                     <children>
+                        <Label fx:id="labelStartTime" prefHeight="28.0" prefWidth="178.0">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="labelEndTime" prefHeight="28.0" prefWidth="173.0">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Button fx:id="buttonCompareDirs" minWidth="-Infinity" mnemonicParsing="false" onAction="#buttonCompareDirsClicked" prefHeight="25.0" prefWidth="134.0" text="Edit compare dirs" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <TextField fx:id="textFieldCompareDirs" maxWidth="1.7976931348623157E308" prefHeight="28.0" prefWidth="311.0" />
+               </children>
+               <padding>
+                  <Insets bottom="3.0" top="3.0" />
+               </padding>
+            </HBox>
+            <TextField fx:id="textFieldCurrentDir" editable="false">
+               <VBox.margin>
+                  <Insets left="3.0" />
+               </VBox.margin></TextField>
+            <Label fx:id="laberMessage" maxWidth="1.7976931348623157E308" prefHeight="20.0" prefWidth="862.0">
+               <VBox.margin>
+                  <Insets left="3.0" />
+               </VBox.margin></Label>
+            <Label fx:id="labelList" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="20.0" prefWidth="1252.0" VBox.vgrow="NEVER">
+               <VBox.margin>
+                  <Insets left="3.0" />
+               </VBox.margin>
+            </Label>
+            <HBox fx:id="hBoxLIst" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+               <children>
+                  <ListView fx:id="listViewDirs" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="176.0" prefWidth="1256.0" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="3.0" />
+                     </HBox.margin>
+                  </ListView>
+               </children>
+            </HBox>
+         </children>
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </VBox>
+   </children>
+</GridPane>

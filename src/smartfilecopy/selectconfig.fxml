@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="365.0" prefWidth="948.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ListView fx:id="listConfigs" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+            <HBox maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label prefHeight="20.0" prefWidth="76.0" text="Name:" HBox.hgrow="NEVER">
+                     <padding>
+                        <Insets left="5.0" right="5.0" top="3.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="textFieldName" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="890.0" />
+               </children>
+               <padding>
+                  <Insets bottom="3.0" top="3.0" />
+               </padding>
+            </HBox>
+            <HBox maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label prefHeight="20.0" prefWidth="72.0" text="Source:" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="5.0" top="3.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="textFieldSource" prefHeight="30.0" prefWidth="892.0" />
+               </children>
+               <padding>
+                  <Insets bottom="3.0" top="3.0" />
+               </padding>
+            </HBox>
+            <HBox maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label prefHeight="20.0" prefWidth="78.0" text="Target:" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="5.0" right="5.0" top="3.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="textFieldTarget" prefHeight="30.0" prefWidth="892.0" />
+               </children>
+               <padding>
+                  <Insets bottom="3.0" top="3.0" />
+               </padding>
+            </HBox>
+            <HBox maxWidth="1.7976931348623157E308" prefHeight="38.0" prefWidth="931.0">
+               <children>
+                  <Button fx:id="buttonSelection" mnemonicParsing="false" onAction="#buttonSelectionClicked" prefHeight="30.0" prefWidth="189.0" text="Use list selection in the app">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="buttonSouce" mnemonicParsing="false" onAction="#buttonSourcePressed" prefWidth="128.0" text="Select source">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="buttonTarget" mnemonicParsing="false" onAction="#buttonTargetPressed" prefWidth="128.0" text="Select target">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="buttonSave" mnemonicParsing="false" prefHeight="30.0" prefWidth="123.0" text="Save">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="buttonDelete" mnemonicParsing="false" onAction="#buttonDeleteClicked" prefHeight="30.0" prefWidth="175.0" text="Delete row from list">
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="buttonNewDirPairs" mnemonicParsing="false" onAction="#buttonNewDirPairsPressed" prefHeight="30.0" prefWidth="138.0" text="New Config Item" />
+               </children>
+               <padding>
+                  <Insets bottom="3.0" top="3.0" />
+               </padding>
+            </HBox>
+            <Label fx:id="labelMsg" maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="925.0" />
+         </children>
+         <padding>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+         </padding></VBox>
+   </children>
+</AnchorPane>

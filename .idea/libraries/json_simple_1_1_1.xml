@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="json-simple-1.1.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/json-simple-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-compress-1.20.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-io-2.10.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/pdfbox-2.0.24.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/preflight-app-2.0.24.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-net-3.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-text-1.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/tika-app-1.27.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
