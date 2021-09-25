@@ -111,8 +111,9 @@ public class ConfigDirItem {
     {
         if (userConfig == null)
             return false;
-        if (!userConfig.isFile())
+        if (userConfig.exists() && !userConfig.isFile())
             return false;
+
         JSONArray items = new JSONArray();
         JSONObject jsonObj ;
         for(ConfigDirItem ci : configitems)

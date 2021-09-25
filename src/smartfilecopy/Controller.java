@@ -446,14 +446,19 @@ public class Controller {
         String envUser = (File.separatorChar == '\\' ? "USERPROFILE" : "HOME");
         String useHome = System.getenv(envUser);
         userAppDir = new File(useHome +File.separator +".smartfilecopy");
+        if (!userAppDir.exists())
+            userAppDir.mkdir();
         useConfigFile = new File(userAppDir.getAbsolutePath() +File.separator +"config.json");
         try {
-            readItems = ConfigDirItem.loadConfigsFromFile(useConfigFile);
-            if (mainCI == null)
-                mainCI = ConfigDirItem.selectedtem;
-            if (mainCI == null && readItems.length > 0)
-                mainCI = readItems[0];
+            if (useConfigFile.exists()) {
+                readItems = ConfigDirItem.loadConfigsFromFile(useConfigFile);
+                if (mainCI == null && ConfigDirItem.selectedtem != null)
+                    mainCI = ConfigDirItem.selectedtem;
+                if (mainCI == null && readItems.length > 0)
+                    mainCI = readItems[0];
+            }
         }catch (Exception e){
+            e.printStackTrace();
             laberMessage.setText(e.getMessage());
             return;
         }
@@ -973,27 +978,42 @@ public class Controller {
     {
         Properties props = new Properties();
         try {
-            File f = new File(cnst_prop_file);
+            File f = new File("." +File.separator + cnst_prop_file);
+            System.out.println("properties file=" +f.getAbsolutePath());
             FileReader fr = null;
-            if (f.exists())
+            if (f.exists()) {
+                System.out.println("load=" +f.getAbsolutePath());
                 fr = new FileReader(f);
+            }
+            else
+            {
+                System.out.println("cannot load=: " +f.getAbsolutePath());
+                System.exit(1);
+            }
+
             if (fr != null) {
                 props.load(fr);
             }
             String envUser = (File.separatorChar == '\\' ? "USERPROFILE" : "HOME");
             String useHome = System.getenv(envUser);
+            System.out.println("useHome=" +useHome);
             File userAppDir = new File(useHome +File.separator +".smartfilecopy");
+            if (!userAppDir.exists())
+                userAppDir.mkdir();
+            System.out.println("userAppDir=" +userAppDir);
 
             File f2 = new File(userAppDir.getAbsolutePath() +File.separator +cnst_prop_file);
             if (f2.exists())
             {
                 fr = new FileReader(f2);
+                System.out.println("load=" +f2.getAbsolutePath());
                 props.load(fr);
             }
             else
             {
                 FileOutputStream fos = new FileOutputStream(f2);
                 props.store(fos, "application values for a user");
+                fos.close();
             }
             String none_empthy_dirs = props.getProperty(cnst_none_empthy_dirs);
             if (none_empthy_dirs != null)
@@ -1004,9 +1024,10 @@ public class Controller {
                 none_empthy_dirs = none_empthy_dirs.replace("{" +cnst_ebooktypes +"}", ebooktypes);
                 props.setProperty(cnst_none_empthy_dirs, none_empthy_dirs);
             }
-            System.out.println("");
+            System.out.println("loaded ok");
         }catch (Exception e){
-            return null;
+            e.printStackTrace();
+            return props;
         }
         return props;
     }
@@ -1281,13 +1302,14 @@ public class Controller {
 
     public void appIsClosing()
     {
-      // saveConfigs();
+        saveConfigs();
     }
 
-    private void SaveConfigs()
+    private void saveConfigs()
     {
         updateMainCiAndListItems();
-        ConfigDirItem.writeJsonFile(this.useConfigFile, readItems, mainCI);
+        if (readItems != null)
+            ConfigDirItem.writeJsonFile(this.useConfigFile, readItems, mainCI);
     }
 
     private void updateMainCiAndListItems()
@@ -1298,6 +1320,15 @@ public class Controller {
         mainCI = new ConfigDirItem(name, textFieldSourcePath.getText(), textFieldTargetPath.getText());
         boolean bTheSameMainCl = false;
         int i = -1, iTheSameMainCl = -1;
+        if (readItems == null)
+        {
+            if (mainCI != null) {
+                readItems = new ConfigDirItem[1];
+                readItems[0] = mainCI;
+            }
+        }
+
+        if (readItems != null)
         for(ConfigDirItem c : readItems)
         {
             i++;
@@ -1306,7 +1337,7 @@ public class Controller {
                 iTheSameMainCl = i;
             }
         }
-        if (!bTheSameMainCl) {
+        if (!bTheSameMainCl && readItems != null && readItems.length >0) {
             ConfigDirItem [] newItems = new ConfigDirItem[readItems.length +1];
             i = 0;
             for(ConfigDirItem c : readItems)
@@ -1315,7 +1346,7 @@ public class Controller {
         }
         else
         {
-            if (bTheSameMainCl)
+            if (bTheSameMainCl && iTheSameMainCl > -1)
                 readItems[iTheSameMainCl] = mainCI;
         }
     }
@@ -1768,6 +1799,7 @@ public class Controller {
 
         String strChoiseValue = (String)choiceboxType.getSelectionModel().getSelectedItem();
         choiceboxType.getItems().clear();
+        choiceboxType.getItems().add("-- all");
         for(String f : getAddPointCharArray(proerties.get(cnst_none_empthy_dirs).toString().split(",")))
             choiceboxType.getItems().add(f.trim());
         if (strChoiseValue != null)
