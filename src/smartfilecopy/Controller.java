@@ -169,7 +169,7 @@ public class Controller {
     @FXML
     RadioButton radioButtonSortSimilarBaseFNames;
     @FXML
-    RadioButton radioButtonMissigTitles;
+    RadioButton radioButtonEmptyTitleDirs;
     @FXML
     RadioButton radioButtonSelectCopyingTitles;
     @FXML
@@ -188,6 +188,11 @@ public class Controller {
     RadioButton radioButtonSource;
     @FXML
     RadioButton radioButtonTarget;
+    @FXML
+    private RadioButton radioCopyMissingTitles;
+    @FXML
+    private CheckBox checkBoxFlatEpubDir;
+
 /*    @FXML
     HBox hBoxLIst;
 */
@@ -261,7 +266,8 @@ public class Controller {
         sourcetargetlistener = new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> obs, Boolean wasPreviouslySelected, Boolean isNowSelected) {
-                if (radioButtonCopyTitles.isSelected() || radioButtonSelectCopyingTitles.isSelected()) {
+                if (radioButtonCopyTitles.isSelected() || radioButtonSelectCopyingTitles.isSelected()
+                    || radioCopyMissingTitles.isSelected()) {
                     radioButtonTarget.setDisable(true);
                     radioButtonSource.setDisable(true);
                 } else {
@@ -286,6 +292,7 @@ public class Controller {
 
         radioButtonCopyTitles.selectedProperty().addListener(sourcetargetlistener);
         radioButtonSelectCopyingTitles.selectedProperty().addListener(sourcetargetlistener);
+        radioCopyMissingTitles.selectedProperty().addListener(sourcetargetlistener);
         radioButtonFindTuples.selectedProperty().addListener(sourcetargetlistener);
         radioButtonFindRealTuples.selectedProperty().addListener(sourcetargetlistener);
         radioButtonSortBaseFNames.selectedProperty().addListener(sourcetargetlistener);
@@ -369,7 +376,7 @@ public class Controller {
         radioButtonCopyFlles.setTooltip(tip);
 
         // radioButtonCopyFlles.setSelected(true);
-        laberMessage.setText("Check either Titles or Make Compress checkbox and after it, some radiobutton before pressing the Executte button.");
+        setLabelText("Check either Titles or Make Compress checkbox and after it, some radiobutton before pressing the Executte button.");
 
         tooltiptext = "This radio button will find tuple title book files below into a target dir";
         tip = new Tooltip(tooltiptext);
@@ -421,7 +428,7 @@ public class Controller {
         tip = new Tooltip(tooltiptext);
         tip.setStyle("-fx-font-weight: bold");
         tip.setStyle("-fx-font-size: 14");
-        radioButtonMissigTitles.setTooltip(tip);
+        radioButtonEmptyTitleDirs.setTooltip(tip);
 
         tooltiptext = "Sort founded ebooks after file base name from a source directory";
         tip = new Tooltip(tooltiptext);
@@ -432,6 +439,7 @@ public class Controller {
         checkBoxSimilar.setDisable(true);
         radioButtonSelectCopyingTitles.setDisable(true);
         radioButtonCopyTitles.setDisable(true);
+        radioCopyMissingTitles.setDisable(true);
         radioButtonTar.setDisable(true);
 
         checkBoxTitles.setSelected(false);
@@ -459,7 +467,7 @@ public class Controller {
             }
         }catch (Exception e){
             e.printStackTrace();
-            laberMessage.setText(e.getMessage());
+            setLabelText(e.getMessage());
             return;
         }
         if (mainCI != null)
@@ -490,13 +498,13 @@ public class Controller {
         radioButtonSortSimilarBaseFNames.setTooltip(tip);
 
         radioButtonSortSimilarBaseFNames.setSelected(false);
-        radioButtonMissigTitles.setSelected(false);
+        radioButtonEmptyTitleDirs.setSelected(false);
         radioButtonSortTypeOf.setSelected(false);
         radioButtonSortTypeOf.setDisable(true);
         radioButtonSource.setDisable(true);
         radioButtonTarget.setDisable(true);
         radioButtonSortSimilarBaseFNames.setDisable(true);
-        radioButtonMissigTitles.setDisable(true);
+        radioButtonEmptyTitleDirs.setDisable(true);
         radioButtonSortBaseFNames.setDisable(true);
         //radioButtonZip.managedProperty().bind(myHBox.visibleProperty());
         // radioButtonTar.setVisible(false);
@@ -789,6 +797,7 @@ public class Controller {
                 {
                     checkBoxCompress.setDisable(false);
                     radioButtonCopyTitles.setSelected(false);
+                    radioCopyMissingTitles.setSelected(false);
                     radioButtonSelectCopyingTitles.setSelected(false);
                     radioButtonSortTypeOf.setSelected(false);
                     radioButtonSource.setSelected(false);
@@ -801,7 +810,7 @@ public class Controller {
                     radioButtonCopyFlles.setSelected(false);
                     radioButtonSortBaseFNames.setSelected(false);
                     radioButtonSortSimilarBaseFNames.setSelected(false);
-                    radioButtonMissigTitles.setSelected(false);
+                    radioButtonEmptyTitleDirs.setSelected(false);
                     radioButtonSortTypeOf.setSelected(false);
                 }
 
@@ -819,12 +828,13 @@ public class Controller {
                 checkBoxStartWith.setDisable(!newValue);
                 checkBoxOnlyEpubs.setDisable(!newValue);
                 radioButtonCopyTitles.setDisable(!newValue);
+                radioCopyMissingTitles.setDisable(!newValue);
                 radioButtonFindTuples.setDisable(!newValue);
                 radioButtonFindRealTuples.setDisable(!newValue);
                 radioButtonCopyFlles.setDisable(!newValue);
                 radioButtonSortBaseFNames.setDisable(!newValue);
                 radioButtonSortSimilarBaseFNames.setDisable(!newValue);
-                radioButtonMissigTitles.setDisable(!newValue);
+                radioButtonEmptyTitleDirs.setDisable(!newValue);
                 radioButtonSortTypeOf.setDisable(!newValue);
                 radioButtonSource.setDisable(!newValue);
                 radioButtonTarget.setDisable(!newValue);
@@ -1062,7 +1072,7 @@ public class Controller {
                 return;
             if (!radioButtonFindTuples.isSelected() && !radioButtonSortBaseFNames.isSelected()
                     && !radioButtonSortSimilarBaseFNames.isSelected()
-                    && !radioButtonMissigTitles.isSelected()
+                    && !radioButtonEmptyTitleDirs.isSelected()
                     && !radioButtonSelectCopyingTitles.isSelected()
                     && !radioButtonFindRealTuples.isSelected()
                     && !radioButtonSortTypeOf.isSelected())
@@ -1078,18 +1088,43 @@ public class Controller {
                     if (!fTargetDir.exists())
                         return;
 
-                    File fTargetAuthor = new File(fTargetDir.getAbsoluteFile() +File.separator +getAuthDirName(f));
-                    if (!fTargetAuthor.exists())
-                       if (!fTargetAuthor.mkdir())
-                       {
-                           updateMessage("Cannot create none existing author dir: " +fTargetAuthor.getAbsolutePath());
-                           return;
-                       }
-                        File ftargetBookDir = new File(fTargetAuthor.getAbsoluteFile() +File.separator +getBookDirName(f));
+                    if (checkBoxFlatEpubDir.isSelected())
+                    {
+                        try {
+                            copyFileIntoTargetDir(f, fTargetDir);
+                            int ind = listViewDirs.getSelectionModel().getSelectedIndex();
+                            final int newSelectedIdx =
+                                    (ind == listViewDirs.getItems().size() - 1)
+                                            ? ind - 1
+                                            : ind;
+                            if (ind > -1)
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        listViewDirs.setItems(null);
+                                        listitems.remove(newSelectedIdx);
+                                        listViewDirs.setItems(listitems);
+                                        listViewDirs.refresh();
+                                        // listViewDirs.getItems().remove(ind);
+                                        laberMessage.setText("Copyed book: " + f.getAbsolutePath() + " into target dir");
+                                    }
+                                });
+                        // dddd
+                        } catch (IOException ioe) {
+                            sbError.append("cannot write " + f.getAbsolutePath() + " into " + fTargetDir.getAbsolutePath() + "\n");
+                        }
+                    }
+                    else {
+                        File fTargetAuthor = new File(fTargetDir.getAbsoluteFile() + File.separator + getAuthDirName(f));
+                        if (!fTargetAuthor.exists())
+                            if (!fTargetAuthor.mkdir()) {
+                                updateMessage("Cannot create none existing author dir: " + fTargetAuthor.getAbsolutePath());
+                                return;
+                            }
+                        File ftargetBookDir = new File(fTargetAuthor.getAbsoluteFile() + File.separator + getBookDirName(f));
                         if (!ftargetBookDir.exists())
-                            if (!ftargetBookDir.mkdir())
-                            {
-                                updateMessage("Cannot create none existing book dir: " +ftargetBookDir.getAbsolutePath());
+                            if (!ftargetBookDir.mkdir()) {
+                                updateMessage("Cannot create none existing book dir: " + ftargetBookDir.getAbsolutePath());
                                 return;
                             }
 
@@ -1101,27 +1136,29 @@ public class Controller {
                                             ? ind - 1
                                             : ind;
                             if (ind > -1)
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    listViewDirs.setItems(null);
-                                    listitems.remove(newSelectedIdx);
-                                    listViewDirs.setItems(listitems);
-                                    listViewDirs.refresh();
-                                    // listViewDirs.getItems().remove(ind);
-                                    laberMessage.setText("Copyed book: " +f.getAbsolutePath() +" into target dir");
-                                }});
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        listViewDirs.setItems(null);
+                                        listitems.remove(newSelectedIdx);
+                                        listViewDirs.setItems(listitems);
+                                        listViewDirs.refresh();
+                                        // listViewDirs.getItems().remove(ind);
+                                        laberMessage.setText("Copyed book: " + f.getAbsolutePath() + " into target dir");
+                                    }
+                                });
 
-                        // dddd
-                    }catch (IOException ioe){
-                        sbError.append("cannot write " +f.getAbsolutePath() +" into " +ftargetBookDir.getAbsolutePath() +"\n");
+                            // dddd
+                        } catch (IOException ioe) {
+                            sbError.append("cannot write " + f.getAbsolutePath() + " into " + ftargetBookDir.getAbsolutePath() + "\n");
+                        }
                     }
                 }
                 else
                 if(radioButtonSortSimilarBaseFNames.isSelected()
                     || radioButtonSelectCopyingTitles.isSelected()
                     || radioButtonFindTuples.isSelected()
-                    || radioButtonMissigTitles.isSelected()
+                    || radioButtonEmptyTitleDirs.isSelected()
                     || radioButtonFindRealTuples.isSelected())
                     deleletTitleFile(willDeleteFilePath);
             }
@@ -1152,7 +1189,7 @@ public class Controller {
         File f = new File(willDeleteFilePath);
         if (!f.exists())
         {
-            laberMessage.setText("This file does not exists anymore: " +f.getAbsolutePath());
+            setLabelText("This file does not exists anymore: " +f.getAbsolutePath());
             return;
         }
 
@@ -1175,12 +1212,12 @@ public class Controller {
 
         if (!bDeleteFile)
         {
-            laberMessage.setText("The file not deleted.");
+            setLabelText("The file not deleted.");
             return;
         }
 
         File parentfile = f.getParentFile();
-        if (radioButtonMissigTitles.isSelected() && f.isDirectory())
+        if (radioButtonEmptyTitleDirs.isSelected() && f.isDirectory())
         {
             File [] files = f.listFiles();
             for(File f2 : files)
@@ -1192,7 +1229,7 @@ public class Controller {
             f.delete();
             if (f.exists())
             {
-                laberMessage.setText("Cannot delete dir: " +f.getAbsolutePath());
+                setLabelText("Cannot delete dir: " +f.getAbsolutePath());
                 return;
             }
             files = parentF.listFiles();
@@ -1204,7 +1241,7 @@ public class Controller {
                 if (deletedir.delete())
                     parentF.delete();
             }
-            laberMessage.setText("Deleted dir: " +f.getAbsolutePath());
+            setLabelText("Deleted dir: " +f.getAbsolutePath());
             int indSelected = listViewDirs.getSelectionModel().getSelectedIndex();
             if (indSelected > -1)
             {
@@ -1215,7 +1252,7 @@ public class Controller {
         else
         if (!f.delete())
         {
-            laberMessage.setText("Cannot delete this file: " +f.getAbsolutePath());
+            setLabelText("Cannot delete this file: " +f.getAbsolutePath());
             return;
         }
 
@@ -1227,7 +1264,7 @@ public class Controller {
         File superparent = parentfile.getParentFile();
         if (anotherfiles.length == 0) {
             if (!parentfile.delete()) {
-                laberMessage.setText("Cannot delete the parent file: " + parentfile.getAbsolutePath());
+                setLabelText("Cannot delete the parent file: " + parentfile.getAbsolutePath());
                 return;
             }
         }
@@ -1265,13 +1302,13 @@ public class Controller {
         for(File f2 : anotherfiles)
         {
             if (!f2.delete()){
-                laberMessage.setText("Cannot delete the parent file: " + f2.getAbsolutePath());
+                setLabelText("Cannot delete the parent file: " + f2.getAbsolutePath());
                 return;
             }
         }
          */
         if (!parentfile.delete()) {
-            laberMessage.setText("Cannot delete the parent file: " + parentfile.getAbsolutePath());
+            setLabelText("Cannot delete the parent file: " + parentfile.getAbsolutePath());
             return;
         }
         if (superparent.exists())
@@ -1279,7 +1316,7 @@ public class Controller {
             File [] children = superparent.listFiles();
             if (children.length == 0)
                 if (!superparent.delete()) {
-                    laberMessage.setText("Cannot delete the parent file: " + superparent.getAbsolutePath());
+                    setLabelText("Cannot delete the parent file: " + superparent.getAbsolutePath());
                     return;
                 }
         }
@@ -1390,7 +1427,7 @@ public class Controller {
             }
         }catch (Exception e){
             e.printStackTrace();
-            laberMessage.setText(e.getMessage());
+            setLabelText(e.getMessage());
         }
     }
 
@@ -1414,7 +1451,7 @@ public class Controller {
         File userAppDir = new File(useHome +File.separator +".smartfilecopy");
         if (!userAppDir.exists())
             if (!userAppDir.mkdir()) {
-                laberMessage.setText("Cannot create dir: " +userAppDir.getAbsolutePath());
+                setLabelText("Cannot create dir: " +userAppDir.getAbsolutePath());
                 return;
             }
 
@@ -1495,7 +1532,7 @@ public class Controller {
              */
         }catch (Exception e){
             e.printStackTrace();
-            laberMessage.setText(e.getMessage());
+            setLabelText(e.getMessage());
         }
     }
 
@@ -1680,6 +1717,11 @@ public class Controller {
     private ExtensionsFilter getEbooksFilter()
     {
         ExtensionsFilter ret = new ExtensionsFilter(new String[] {".epub", ".pdf",".mobi"});
+        if (checkBoxOnlyEpubs.isSelected()) {
+            ret = new ExtensionsFilter(new String[]{".epub"});
+            return ret;
+        }
+
         String value = proerties.getProperty(cnst_ebooktypes);
         if (value != null && value.trim().length() > 0)
         {
@@ -1742,54 +1784,55 @@ public class Controller {
 
         String strSourcePath = this.textFieldSourcePath.getText();
         if (strSourcePath == null || strSourcePath.trim().length() < 1) {
-            laberMessage.setText("Source textField is empty!");
+            setLabelText("Source textField is empty!");
             return;
         }
         String strTargetPath = this.textFieldTargetPath.getText();
         if (strTargetPath == null || strTargetPath.trim().length() < 1) {
-            laberMessage.setText("Target textField is empty!");
+            setLabelText("Target textField is empty!");
             return;
         }
         File fSourceDir = new File(strSourcePath);
         if (!radioButtonFindRealTuples.isSelected() && !radioButtonFindTuples.isSelected() && !radioButtonSortBaseFNames.isSelected() && !fSourceDir.exists()) {
-            laberMessage.setText("Source dir does not exists!");
+            setLabelText("Source dir does not exists!");
             return;
         }
         if (!radioButtonFindRealTuples.isSelected() && !radioButtonFindTuples.isSelected() && !radioButtonSortBaseFNames.isSelected() && !fSourceDir.isDirectory())
         {
-            laberMessage.setText("Source dir is a file!");
+            setLabelText("Source dir is a file!");
             return;
         }
         File fTargetDir = new File(strTargetPath);
         if (!fTargetDir.exists())
         {
-            laberMessage.setText("Target dir does not exists!");
+            setLabelText("Target dir does not exists!");
             return;
         }
         if (!fTargetDir.isDirectory())
         {
-            laberMessage.setText("Target dir is a file!");
+            setLabelText("Target dir is a file!");
             return;
         }
         if (!radioButtonFindRealTuples.isSelected() && !radioButtonFindTuples.isSelected() && !radioButtonSortBaseFNames.isSelected()
                 && fSourceDir.getAbsolutePath().equals(fTargetDir.getAbsolutePath()))
         {
-            laberMessage.setText("Target dir and source dir are the same!. Stopped");
+            setLabelText("Target dir and source dir are the same!. Stopped");
             return;
         }
 
         if (!radioButtonTar.isSelected() && !radioButton7z.isSelected()
                 && !radioButtonZip.isSelected()
                 && !radioButtonCopyTitles.isSelected()
+                && !radioCopyMissingTitles.isSelected()
                 && !radioButtonSelectCopyingTitles.isSelected()
                 && !radioButtonCopyFlles.isSelected()
                 && !radioButtonFindTuples.isSelected() && !radioButtonSortBaseFNames.isSelected()
                 && !radioButtonSortSimilarBaseFNames.isSelected()
-                && !radioButtonMissigTitles.isSelected()
+                && !radioButtonEmptyTitleDirs.isSelected()
                 && !radioButtonFindRealTuples.isSelected()
                 && !radioButtonSortTypeOf.isSelected())
         {
-            laberMessage.setText("Select some of radio buttons before execution!");
+            setLabelText("Select some of radio buttons before execution!");
             return;
         }
 
@@ -1812,7 +1855,7 @@ public class Controller {
         LocalDateTime now = LocalDateTime.now();
         labelStartTime.setText(dtf.format(now));
         labelEndTime.setText("");
-        laberMessage.setText("Started execution...");
+        setLabelText("Started execution...");
 
         task = new Task<Integer>() {
             @Override
@@ -1829,7 +1872,8 @@ public class Controller {
                     }});
 
                 try {
-                    if (radioButtonCopyTitles.isSelected() || radioButtonSelectCopyingTitles.isSelected())
+                    if (radioCopyMissingTitles.isSelected() ||  radioButtonCopyTitles.isSelected()
+                            || radioButtonSelectCopyingTitles.isSelected())
                         sendBooksIntoDevice(fSourceDir, fTargetDir, arrCompareDirs);
                     else {
                         if (radioButtonFindTuples.isSelected() || radioButtonFindRealTuples.isSelected())
@@ -1847,8 +1891,8 @@ public class Controller {
                         if (radioButtonSortSimilarBaseFNames.isSelected())
                             sortAndShowSimilarBaseFileNames();
                         else
-                        if (radioButtonMissigTitles.isSelected())
-                            searchMissingTitles();
+                        if (radioButtonEmptyTitleDirs.isSelected())
+                            searchEmptyTitleDirs();
                         else
                         if (radioButtonSortTypeOf.isSelected())
                             startSearchSpesificTypeOfFiles();
@@ -2024,7 +2068,7 @@ public class Controller {
         }
     }
 
-    private void searchMissingTitles()
+    private void searchEmptyTitleDirs()
     {
         hmSourceBooks = new HashMap<String,FoundedHashFiles>();
         hmTargetBooks = new HashMap<String,FoundedHashFiles>();
@@ -2229,6 +2273,8 @@ public class Controller {
             seekSourceDirBooks(fSourceDir);
             seekCompareDirBooks(arrCompareDirs);
             seekTargetDirBooks(fTargetDir);
+            if (radioCopyMissingTitles.isSelected())
+                removeFromSourceTheSameBooksInTarget();
             File[] copyBookFiles = getSelectWhichBooksWillCopyed();
             if (radioButtonSelectCopyingTitles.isSelected())
             {
@@ -2250,8 +2296,13 @@ public class Controller {
                         listViewDirs.setItems(listitems);
                 }});
             }
-            else
-                copySelectedBookIntoDevice(copyBookFiles);
+            else {
+                listitems.clear();
+                if (checkBoxFlatEpubDir.isSelected())
+                    copySelectedBookIntoFlatDirOfDevice(copyBookFiles);
+                else
+                    copySelectedBookIntoDevice(copyBookFiles);
+            }
 
             /*
             File pdffile = new File("C:\\Users\\tkassila\\Documents\\Calibre Library\\Andres Almiray, Danno Ferrin, James\\Griffon in Action (438)\\Griffon in Action - Andres Almiray, Danno Ferrin, J.pdf");
@@ -2262,6 +2313,25 @@ public class Controller {
         //    }
         }catch (Exception e){
             e.printStackTrace();
+        }
+    }
+
+    private void removeFromSourceTheSameBooksInTarget() {
+        HashMap<String, FoundedHashFiles> hmRemoveSourceBooks = new HashMap<String, FoundedHashFiles>();
+        for (String strTarget : hmTargetBooks.keySet()) {
+            if (strTarget == null || strTarget.trim().length() == 0)
+                continue;
+            for (String strSource : hmSourceBooks.keySet()) {
+                if (strSource == null || strSource.trim().length() == 0)
+                    continue;
+                if (strSource.equals(strTarget))
+                    hmRemoveSourceBooks.put(strSource, hmSourceBooks.get(strSource));
+            }
+        }
+        if (hmRemoveSourceBooks.size() == 0)
+            return;
+        for (String strSource : hmRemoveSourceBooks.keySet()) {
+            hmSourceBooks.remove(strSource);
         }
     }
 
@@ -2487,10 +2557,55 @@ public class Controller {
         return null;
     }
 
+    private void setLabelText(String txt)
+    {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                laberMessage.setText(txt);
+            }});
+    }
+
+    private void copySelectedBookIntoFlatDirOfDevice(File [] copyBookFiles)
+    {
+        if (copyBookFiles == null || copyBookFiles.length == 0) {
+            setLabelText("No ebooks to copy");
+            return;
+        }
+
+        File targetDir = new File(textFieldTargetPath.getText());
+        if (!targetDir.exists())
+        {
+            laberMessage.setText("No targetdir does not exists!");
+            return;
+        }
+
+        File ftargetBook = null;
+        for (File f : copyBookFiles)
+        {
+            try {
+                copyFileIntoTargetDir(f, targetDir);
+                ListViewDirItem item = new ListViewDirItem();
+                item.showname = "doc " + f.getAbsolutePath() + " ...";
+                item.path = f.getAbsolutePath();
+                item.title = getToolTipTitle(f);
+                listitems.add(item);
+            }catch (IOException ioe){
+                sbError.append("cannot write " +f.getAbsolutePath() +" into " +ftargetBook.getAbsolutePath() +"\n");
+                continue;
+            }
+        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                laberMessage.setText("Ebooks copy done"); // ddd
+            }
+        });
+    }
     private void copySelectedBookIntoDevice(File [] copyBookFiles)
     {
         if (copyBookFiles == null || copyBookFiles.length == 0) {
-            laberMessage.setText("No ebooks to copy");
+            setLabelText("No ebooks to copy");
             return;
         }
 
@@ -2631,8 +2746,12 @@ public class Controller {
         File [] ebooks = fSourceDir.listFiles(ebookfilter);
         // addEBooksIntoHash(ebooks);
         // addEBooksIntoHash(ebooks);
-        if (ebooks != null && ebooks.length > 0)
-            hmSourceBooks = updateFilesWithThisHash(ebooks, hmSourceBooks);
+        if (ebooks != null && ebooks.length > 0) {
+            if (checkBoxOnlyEpubs.isSelected())
+                hmSourceBooks = updateEpubFilesWithThisHash(ebooks, hmSourceBooks);
+            else
+                hmSourceBooks = updateFilesWithThisHash(ebooks, hmSourceBooks);
+        }
         File [] subdirs = fSourceDir.listFiles(new FileFilter() {
             @Override
             public boolean accept(File file) {
@@ -2743,6 +2862,41 @@ public class Controller {
         return hmDir;
     }
 
+    private HashMap<String,FoundedHashFiles>
+    updateEpubFilesWithThisHash(File [] ebooks, HashMap<String,FoundedHashFiles> hmDir)
+    // throws IOException
+    {
+        FoundedHashFiles fhashfiles;
+        hashMap = new StartWithimportHashMap(hmDir);
+        for (File f : ebooks) {
+                fhashfiles = (FoundedHashFiles) hmDir.get(f.getName());
+                if (fhashfiles == null && checkBoxStartWith.isSelected())
+                    fhashfiles = hashMap.getStartWith(f.getName());
+                // fhashfiles = getStartWith(title, hmDir);
+                if (fhashfiles == null && checkBoxSimilar.isSelected())
+                    fhashfiles = getSimilarTitle(f.getName(), hmDir);
+
+                if (fhashfiles == null) {
+                    fhashfiles = new FoundedHashFiles();
+                    fhashfiles.title = f.getName();
+                    fhashfiles.arrFiles = new File[1];
+                    fhashfiles.arrFiles[0] = f;
+                } else {
+                    File[] arrFiles = fhashfiles.arrFiles;
+                    int max = (fhashfiles.arrFiles == null ? 0 : fhashfiles.arrFiles.length);
+                    fhashfiles.arrFiles = new File[max + 1];
+                    int i = 0;
+                    for (File f2 : arrFiles) {
+                        fhashfiles.arrFiles[i++] = f2;
+                    }
+                    fhashfiles.arrFiles[i] = f;
+                }
+                hmDir.put(f.getName(), fhashfiles);
+                updateMessage(getStrikeChars());
+      }
+      return hmDir;
+    }
+
     private void seekSortedTargetDirBooks(File fTargetDir)
     // throws IOException
     {
@@ -2803,8 +2957,12 @@ public class Controller {
         if (fTargetDir == null || !fTargetDir.exists())
             return;
         File [] ebooks = fTargetDir.listFiles(ebookfilter);
-        if (ebooks != null && ebooks.length > 0)
-            hmTargetBooks = updateFilesWithThisHash(ebooks, hmTargetBooks);
+        if (ebooks != null && ebooks.length > 0) {
+            if (checkBoxOnlyEpubs.isSelected())
+                hmTargetBooks = updateEpubFilesWithThisHash(ebooks, hmTargetBooks);
+            else
+                hmTargetBooks = updateFilesWithThisHash(ebooks, hmTargetBooks);
+        }
         // addEBooksIntoHash(ebooks);
         File [] subdirs = fTargetDir.listFiles(new FileFilter() {
             @Override
@@ -2825,7 +2983,7 @@ public class Controller {
         for(File dir : subdirs)
         {
             File [] ebooks = dir.listFiles(ebookfilter);
-            addEBooksIntoHash(ebooks);
+            addEBooksIntoHash(ebooks); // TODO: IMPLEMENTATION!
             File [] dirs = dir.listFiles(new FileFilter() {
                 @Override
                 public boolean accept(File file) {

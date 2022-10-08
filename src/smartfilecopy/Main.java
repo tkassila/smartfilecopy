@@ -43,6 +43,7 @@ public class Main extends Application {
   //      scene.setHeight(bounds.getHeight());
 
 
+        /*
         GridPane gp = (GridPane)loadedroot;
         // gp.minWidthProperty().bind(primaryStage.heightProperty().multiply(1.5));
         // gp.minHeightProperty().bind(primaryStage.widthProperty().divide(1.5));
@@ -65,6 +66,7 @@ public class Main extends Application {
                 controller.getVboxMain().setPrefHeight(newSceneHeight.doubleValue());
             }
         });
+         */
 
         /*
         GridPane gp = (GridPane)loadedroot;
